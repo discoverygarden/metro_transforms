@@ -74,7 +74,7 @@
   </xsl:template>
 
   <!-- Language -->
-  <xsl:template match="mods:mods/mods:language/mods:languageterm">
+  <xsl:template match="mods:mods/mods:language/mods:languageTerm">
     <dc:language>
       <xsl:value-of select="."/>
     </dc:language>
@@ -89,7 +89,7 @@
 
 
   <!-- Description -->
-  <xsl:template match="mods:mods/mods:subject/cartographics/scale | mods:mods/mods:note[@displayLabel='Content Note'] | mods:mods/mods:abstract">
+  <xsl:template match="mods:mods/mods:subject/mods:cartographics/mods:scale | mods:mods/mods:note[@displayLabel='Content Note'] | mods:mods/mods:abstract">
     <dc:description>
       <xsl:value-of select="."/>
     </dc:description>
