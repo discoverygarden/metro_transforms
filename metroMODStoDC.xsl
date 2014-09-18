@@ -33,9 +33,9 @@
         </dc:creator>
       </xsl:when>
       <xsl:otherwise>
-        <dc:contributor>
+        <dc:creator>
           <xsl:value-of select="mods:namePart"/>
-        </dc:contributor>
+        </dc:creator>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -51,9 +51,11 @@
   <xsl:template match="mods:mods/mods:originInfo">
   <xsl:if test="mods:publisher | mods:place/mods:placeTerm">
     <dc:publisher>
-      <xsl:value-of select="mods:place/mods:placeTerm"/>
-      <xsl:if test="mods:publisher">
-        <xsl:text>: </xsl:text>
+      <xsl:if test="mods:place/mods:placeTerm">
+        <xsl:value-of select="mods:place/mods:placeTerm"/>
+        <xsl:if test="mods:publisher">
+          <xsl:text>: </xsl:text>
+        </xsl:if>
       </xsl:if>
       <xsl:value-of select="mods:publisher"/>
     </dc:publisher>
