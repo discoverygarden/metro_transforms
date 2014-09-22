@@ -27,15 +27,15 @@
   <!-- Creator and Contributor -->
   <xsl:template match="mods:mods/mods:name">
     <xsl:choose>
-      <xsl:when test="mods:role/mods:roleTerm='Creator' or mods:role/mods:roleTerm='Author' or mods:role/mods:roleTerm='Photographer'">
+      <xsl:when test="mods:role/mods:roleTerm='Creator' or mods:role/mods:roleTerm='Author' or mods:role/mods:roleTerm='Photographer' or not(mods:role/mods:roleTerm)">
         <dc:creator>
           <xsl:value-of select="mods:namePart"/>
         </dc:creator>
       </xsl:when>
       <xsl:otherwise>
-        <dc:creator>
+        <dc:contributor>
           <xsl:value-of select="mods:namePart"/>
-        </dc:creator>
+        </dc:contributor>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
