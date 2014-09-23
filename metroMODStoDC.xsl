@@ -6,6 +6,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:output method="xml" indent="yes"/>
+  <xsl:variable name="upper_case">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
+  <xsl:variable name="lower_case">abcdefghijklmnopqrstuvwxyz</xsl:variable>
 
   <xsl:template match="/">
     <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
@@ -26,10 +28,9 @@
 
   <!-- Creator and Contributor -->
   <xsl:template match="mods:mods/mods:name">
-    <xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyz'" />
-    <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
+    <xsl:variable name="text" select="translate(mods:role/mods:roleTerm, $upper_case, $lower_case)"/>
     <xsl:choose>
-      <xsl:when test="translate(mods:role/mods:roleTerm, $smallcase, $uppercase)=translate('Creator', $smallcase, $uppercase) or translate(mods:role/mods:roleTerm, $smallcase, $uppercase)=translate('Author', $smallcase, $uppercase) or translate(mods:role/mods:roleTerm, $smallcase, $uppercase)=translate('Photographer', $smallcase, $uppercase) or not(mods:role/mods:roleTerm)">
+      <xsl:when test="$text = 'creator' or $text = 'author' or $text = 'photographer' or not(mods:role/mods:roleTerm)">
         <dc:creator>
           <xsl:value-of select="mods:namePart"/>
         </dc:creator>
