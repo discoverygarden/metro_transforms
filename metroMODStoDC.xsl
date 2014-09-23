@@ -26,8 +26,10 @@
 
   <!-- Creator and Contributor -->
   <xsl:template match="mods:mods/mods:name">
+    <xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyz'" />
+    <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
     <xsl:choose>
-      <xsl:when test="mods:role/mods:roleTerm='Creator' or mods:role/mods:roleTerm='Author' or mods:role/mods:roleTerm='Photographer' or not(mods:role/mods:roleTerm)">
+      <xsl:when test="translate(mods:role/mods:roleTerm, $smallcase, $uppercase)=translate('Creator', $smallcase, $uppercase) or translate(mods:role/mods:roleTerm, $smallcase, $uppercase)=translate('Author', $smallcase, $uppercase) or translate(mods:role/mods:roleTerm, $smallcase, $uppercase)=translate('Photographer', $smallcase, $uppercase) or not(mods:role/mods:roleTerm)">
         <dc:creator>
           <xsl:value-of select="mods:namePart"/>
         </dc:creator>
