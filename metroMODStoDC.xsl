@@ -6,6 +6,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:output method="xml" indent="yes"/>
+  <xsl:variable name="upper_case">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
+  <xsl:variable name="lower_case">abcdefghijklmnopqrstuvwxyz</xsl:variable>
 
   <xsl:template match="/">
     <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
@@ -26,8 +28,9 @@
 
   <!-- Creator and Contributor -->
   <xsl:template match="mods:mods/mods:name">
+    <xsl:variable name="text" select="translate(mods:role/mods:roleTerm, $upper_case, $lower_case)"/>
     <xsl:choose>
-      <xsl:when test="mods:role/mods:roleTerm='Creator' or mods:role/mods:roleTerm='Author' or mods:role/mods:roleTerm='Photographer'">
+      <xsl:when test="$text = 'creator' or $text = 'author' or $text = 'photographer' or not(mods:role/mods:roleTerm)">
         <dc:creator>
           <xsl:value-of select="mods:namePart"/>
         </dc:creator>
@@ -51,9 +54,11 @@
   <xsl:template match="mods:mods/mods:originInfo">
   <xsl:if test="mods:publisher | mods:place/mods:placeTerm">
     <dc:publisher>
-      <xsl:value-of select="mods:place/mods:placeTerm"/>
-      <xsl:if test="mods:publisher">
-        <xsl:text>: </xsl:text>
+      <xsl:if test="mods:place/mods:placeTerm">
+        <xsl:value-of select="mods:place/mods:placeTerm"/>
+        <xsl:if test="mods:publisher">
+          <xsl:text>: </xsl:text>
+        </xsl:if>
       </xsl:if>
       <xsl:value-of select="mods:publisher"/>
     </dc:publisher>
