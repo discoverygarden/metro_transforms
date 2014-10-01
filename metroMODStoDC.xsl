@@ -18,10 +18,6 @@
   <!-- Title -->
   <xsl:template match="mods:mods/mods:titleInfo">
     <dc:title>
-      <xsl:value-of select="mods:nonSort"/>
-      <xsl:if test="mods:nonSort">
-        <xsl:text> </xsl:text>
-      </xsl:if>
       <xsl:value-of select="mods:title"/>
     </dc:title>
   </xsl:template>
